@@ -25,6 +25,7 @@ public abstract class Command extends TabList {
 
     public abstract String errorMessage();
 
+    public abstract boolean isDefault();
 
     public boolean onCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
         plugin.logger(getName() + " onAlways");
@@ -62,9 +63,7 @@ public abstract class Command extends TabList {
         for (int i = 1; i < permissions.size(); i++) {
             stringBuilder.append(".").append(permissions.get(i));
         }
-        if (sender.hasPermission(stringBuilder.toString()) | sender.hasPermission(stringBuilder.toString() + ".*"))
-            return true;
-        return false;
+        return sender.hasPermission(stringBuilder.toString()) | sender.hasPermission(stringBuilder + ".*") | isDefault();
     }
 
     public void setPermission(List<String> permission) {
