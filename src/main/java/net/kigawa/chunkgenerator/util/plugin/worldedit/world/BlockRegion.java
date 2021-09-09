@@ -33,15 +33,15 @@ public class BlockRegion extends Region {
         eY = (int) ((getcY()) + (getHeight() / 2));
         eZ = (int) ((getcZ()) + (getLength() / 2));
 
-        /*
-        if (sX < 0) sX--;
-        if (sY < 0) sY--;
-        if (sZ < 0) sZ--;
 
-        if (eX >= 0) eX++;
-        if (eY >= 0) eY++;
-        if (eZ >= 0) eZ++;
-         */
+        if (eX < 0) sX--;
+        if (eY < 0) sY--;
+        if (eZ < 0) sZ--;
+
+        if (sX >= 0) eX++;
+        if (sY >= 0) eY++;
+        if (sZ >= 0) eZ++;
+
     }
 
     public Location getSLocation(JavaPlugin plugin) {
