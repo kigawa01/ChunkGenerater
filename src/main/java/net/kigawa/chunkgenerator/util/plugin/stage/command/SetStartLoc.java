@@ -14,7 +14,7 @@ public class SetStartLoc extends StageCommandBase {
     KigawaPlugin plugin;
 
     public SetStartLoc(KigawaPlugin kigawaPlugin, StageManager manager) {
-        super(kigawaPlugin,manager);
+        super(kigawaPlugin, manager);
         plugin = kigawaPlugin;
     }
 
@@ -24,18 +24,16 @@ public class SetStartLoc extends StageCommandBase {
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
+    public String onThisCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
         //check args
         if (strings.length == 5) {
             //set start loc
             getManager().setStartLoc(strings[1], Integer.valueOf(strings[2]), Integer.valueOf(strings[3]), Integer.valueOf(strings[4]),
                     commandSender);
             //send message
-            commandSender.sendMessage("set start loc");
-        } else {
-            commandSender.sendMessage("/stage setstartloc <game name> <x> <y> <z>");
+            return "set start loc";
         }
-        return true;
+        return null;
     }
 
     @Override
@@ -45,7 +43,7 @@ public class SetStartLoc extends StageCommandBase {
 
     @Override
     public String errorMessage() {
-        return null;
+        return "/stage setstartloc <game name> <x> <y> <z>";
     }
 
     @Override
@@ -55,14 +53,14 @@ public class SetStartLoc extends StageCommandBase {
 
     @Override
     public List<String> getTabStrings(CommandSender sender, org.bukkit.command.Command command, String label, String[] strings) {
-        if (strings.length==2){
+        if (strings.length == 2) {
             return getManager().getStageNames();
         }
-        if (strings.length==3){
-            List<String> list=new ArrayList();
-            Player player= PluginUtil.getPlayer(sender);
-            Location loc=player.getLocation();
-            list.add(Integer.toString(loc.getBlockX())+Integer.toString(loc.getBlockY())+Integer.toString(loc.getBlockX()));
+        if (strings.length == 3) {
+            List<String> list = new ArrayList();
+            Player player = PluginUtil.getPlayer(sender);
+            Location loc = player.getLocation();
+            list.add(Integer.toString(loc.getBlockX()) + Integer.toString(loc.getBlockY()) + Integer.toString(loc.getBlockX()));
             return list;
         }
         return null;

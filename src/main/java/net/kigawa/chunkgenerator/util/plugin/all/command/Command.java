@@ -10,6 +10,7 @@ public abstract class Command extends TabList {
     private KigawaPlugin plugin;
     private List<Command> subCommands;
     private List<String> permissions;
+    private Command parentCommand;
 
 
     public Command(KigawaPlugin kigawaPlugin) {
@@ -19,40 +20,38 @@ public abstract class Command extends TabList {
         subCommands = new ArrayList<>();
     }
 
-    public abstract boolean onThisCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings);
-
-    public abstract int getWordNumber();
+    public abstract String onThisCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings);
 
     public abstract String errorMessage();
 
     public abstract boolean isDefault();
 
-    public boolean onCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
+    public String onSubcommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
         plugin.logger(getName() + " onAlways");
 
         if (subCommands != null) {
-            if (strings.length>getWordNumber()) {
+            if (strings.length > getWordNumber()) {
                 if (subCommands.contains(new EqualsCommand(strings[getWordNumber()]))) {
                     Command subCommand = subCommands.get(subCommands.indexOf(new EqualsCommand(strings[getWordNumber()])));
-                    return subCommand.onCommand(commandSender, command, s, strings);
+                    return subCommand.onSubcommand(commandSender, command, s, strings);
                 }
             }
         }
         //check permission
         if (checkPermission(commandSender)) {
             plugin.logger(getName() + " onNotFoundSubcommand");
-
-            if (!onThisCommand(commandSender, command, s, strings)) {
-                commandSender.sendMessage(errorMessage());
+            String message = onThisCommand(commandSender, command, s, strings);
+            if (message == null) {
+                return errorMessage();
             }
-            return true;
+            return message;
         } else {
-            commandSender.sendMessage("need permission");
+            return "need permission";
         }
-        return true;
     }
 
     public void addSubcommands(Command subCommand) {
+        subCommand.setParentCommand(this);
         subCommands.add(subCommand);
         addTabLists(subCommand);
     }
@@ -66,6 +65,10 @@ public abstract class Command extends TabList {
         return sender.hasPermission(stringBuilder.toString()) | sender.hasPermission(stringBuilder + ".*") | isDefault();
     }
 
+    public void setParentCommand(Command parentCommand) {
+        this.parentCommand = parentCommand;
+    }
+
     public void setPermission(List<String> permission) {
         List<String> permission1 = new ArrayList<>(permission);
         permission1.add(getName());
@@ -76,6 +79,13 @@ public abstract class Command extends TabList {
             }
         }
         this.permissions = permission1;
+    }
+
+    public int getWordNumber() {
+        if (parentCommand == null) {
+            return 0;
+        }
+        return parentCommand.getWordNumber() + 1;
     }
 
     public KigawaPlugin getPlugin() {

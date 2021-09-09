@@ -20,15 +20,14 @@ public class GateCreate extends GateCommandBase {
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public String onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length == 2) {
             Player player = PluginUtil.getPlayer(commandSender);
             if (player != null) {
-                commandSender.sendMessage(getManager().create(strings[1], player));
+                return getManager().create(strings[1], player);
             }
-            return true;
         }
-        return false;
+        return null;
     }
 
     @Override

@@ -20,13 +20,12 @@ public class Regenerate extends GenerateCommandBase{
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public String onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length==3&&commandSender instanceof Player){
             getGenerator().generate(PluginUtil.getWorld(commandSender).getName(),Integer.valueOf(strings[1]),Integer.valueOf(strings[2]));
-            commandSender.sendMessage("regenerated!");
-            return true;
+            return  "regenerated!";
         }
-        return false;
+        return null;
     }
 
     @Override

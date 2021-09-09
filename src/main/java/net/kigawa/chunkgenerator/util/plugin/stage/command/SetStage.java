@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SetStage extends StageCommandBase {
     public SetStage(KigawaPlugin kigawaPlugin, StageManager manager) {
-        super(kigawaPlugin,manager);
+        super(kigawaPlugin, manager);
     }
 
     @Override
@@ -21,17 +21,15 @@ public class SetStage extends StageCommandBase {
 
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
-        if (strings.length==2) {
+    public String onThisCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
+        if (strings.length == 2) {
             Player player = PluginUtil.getPlayer(commandSender);
             if (player != null) {
                 getManager().setStage(strings[1], WorldEditUtil.getRegion(player), commandSender);
-                commandSender.sendMessage("set stage");
+                return "set stage";
             }
-        }else {
-            commandSender.sendMessage("/onigocreate setoniwait <stage name>");
         }
-        return true;
+        return null;
     }
 
     @Override
@@ -41,7 +39,7 @@ public class SetStage extends StageCommandBase {
 
     @Override
     public String errorMessage() {
-        return null;
+        return "/onigocreate setoniwait <stage name>";
     }
 
     @Override
@@ -51,7 +49,7 @@ public class SetStage extends StageCommandBase {
 
     @Override
     public List<String> getTabStrings(CommandSender sender, org.bukkit.command.Command command, String label, String[] strings) {
-        if (strings.length==2){
+        if (strings.length == 2) {
             return getManager().getStageNames();
         }
         return null;

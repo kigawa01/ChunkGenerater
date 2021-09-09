@@ -34,14 +34,15 @@ public class GateCommand extends FirstCommand {
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public String onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length == 1) {
             Player player = PluginUtil.getPlayer(commandSender);
             if (player != null) {
                 manager.teleport(strings[0], player);
+                return "";
             }
         }
-        return false;
+        return null;
     }
 
     @Override

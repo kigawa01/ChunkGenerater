@@ -27,7 +27,7 @@ public class StageManager {
             File file = new File(folder, files[i]);
             plugin.logger(files[i]);
 
-            StageData data =  plugin.getRecorder().load(StageData.class, "stage", files[i].substring(0, files[i].length() - 4));
+            StageData data = plugin.getRecorder().load(StageData.class, "stage", files[i].substring(0, files[i].length() - 4));
             canUse.add(data);
             allStage.add(data);
         }
@@ -97,7 +97,7 @@ public class StageManager {
         return stageData;
     }
 
-    public void setStage(String name, CommandSender sender) {
+    public String setStage(String name) {
         //check can use this name
         if (getStage(name) == null) {
             //create Stage
@@ -109,9 +109,9 @@ public class StageManager {
             //save
             plugin.getRecorder().save(stageData, "stage");
             //send message
-            sender.sendMessage("create " + name);
+            return "create " + name;
         } else {
-            sender.sendMessage("this name can't use");
+            return "this name can't use";
         }
     }
 

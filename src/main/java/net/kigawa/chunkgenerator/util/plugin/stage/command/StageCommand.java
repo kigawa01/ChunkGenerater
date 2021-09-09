@@ -20,8 +20,8 @@ public abstract class StageCommand extends FirstCommand {
         addSubcommands(new SetStage(plugin,manager));
     }
     @Override
-    public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        return false;
+    public String onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        return null;
     }
     @Override
     public List<String> getTabStrings(CommandSender sender, Command command, String label, String[] strings) {

@@ -20,14 +20,15 @@ public class GateList extends GateCommandBase{
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public String onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length==1){
             Player player=PluginUtil.getPlayer(commandSender);
             if (player!=null) {
                 getManager().sendGates(player);
+                return "";
             }
         }
-        return false;
+        return null;
     }
 
     @Override

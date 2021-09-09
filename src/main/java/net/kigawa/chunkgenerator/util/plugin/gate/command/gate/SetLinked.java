@@ -18,12 +18,11 @@ public class SetLinked extends GateCommandBase{
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public String onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length==3){
-            commandSender.sendMessage(getManager().setLinked(strings[1],strings[2]));
-            return true;
+            return getManager().setLinked(strings[1],strings[2]);
         }
-        return false;
+        return null;
     }
 
     @Override

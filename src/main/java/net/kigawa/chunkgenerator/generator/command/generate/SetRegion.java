@@ -21,12 +21,11 @@ public class SetRegion extends GenerateCommandBase {
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public String onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length == 2 && commandSender instanceof Player) {
-            commandSender.sendMessage(getGenerator().setGenerateRegion(strings[1], new BlockRegion(PluginUtil.getPlayer(commandSender))));
-            return true;
+            return getGenerator().setGenerateRegion(strings[1], new BlockRegion(PluginUtil.getPlayer(commandSender)));
         }
-        return false;
+        return null;
     }
 
     @Override

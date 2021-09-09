@@ -25,8 +25,8 @@ public class GenerateCommand extends FirstCommand {
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        return false;
+    public String onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        return null;
     }
 
     @Override

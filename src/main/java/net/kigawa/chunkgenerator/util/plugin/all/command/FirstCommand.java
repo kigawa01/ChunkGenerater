@@ -22,6 +22,7 @@ public abstract class FirstCommand extends Command implements CommandExecutor, T
     public List<String> onTabComplete(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
         return tabComplete(commandSender, command, s, strings);
     }
+
     @Override
     public void addSubcommands(Command subCommand) {
         getSubCommands().add(subCommand);
@@ -40,15 +41,17 @@ public abstract class FirstCommand extends Command implements CommandExecutor, T
                 if (getSubCommands().contains(new EqualsCommand(strings[0]))) {
                     plugin.logger(getName() + " onGetSubCommand");
                     Command subCommand = getSubCommands().get(getSubCommands().indexOf(new EqualsCommand(strings[0])));
-                    return subCommand.onCommand(commandSender, command, s, strings);
+                    commandSender.sendMessage(subCommand.onSubcommand(commandSender, command, s, strings));
+                    return true;
                 }
             }
         }
         //check permission
         if (checkPermission(commandSender)) {
             plugin.logger(getName() + " onNotFound");
-            return onThisCommand(commandSender, command, s, strings);
-        }else {
+            commandSender.sendMessage(onThisCommand(commandSender, command, s, strings));
+            return true;
+        } else {
             commandSender.sendMessage("need permission");
             return true;
         }

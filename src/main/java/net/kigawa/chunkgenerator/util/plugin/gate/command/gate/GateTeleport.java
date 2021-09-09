@@ -20,15 +20,14 @@ public class GateTeleport extends GateCommandBase{
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public String onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length==2){
             Player player= PluginUtil.getPlayer(commandSender);
             if (player!=null) {
-                commandSender.sendMessage( getManager().teleport(strings[1],player));
-                return true;
+                return getManager().teleport(strings[1],player);
             }
         }
-        return false;
+        return null;
     }
 
     @Override

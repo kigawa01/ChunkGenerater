@@ -13,7 +13,7 @@ public class SetStage1 extends StageCommandBase {
     KigawaPlugin plugin;
 
     public SetStage1(KigawaPlugin kigawaPlugin, StageManager manager) {
-        super(kigawaPlugin,manager);
+        super(kigawaPlugin, manager);
         plugin = kigawaPlugin;
     }
 
@@ -23,7 +23,7 @@ public class SetStage1 extends StageCommandBase {
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
+    public String onThisCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
         if (strings.length == 5) {
             if (commandSender instanceof Player | commandSender instanceof BlockCommandSender) {
                 World world;
@@ -34,13 +34,10 @@ public class SetStage1 extends StageCommandBase {
                 }
                 getManager().setStage1(strings[1], world.getName(),
                         Integer.valueOf(strings[2]), Integer.valueOf(strings[3]), Integer.valueOf(strings[4]), commandSender);
-                commandSender.sendMessage("set start point of stage");
+                return "set start point of stage";
             }
-
-        } else {
-            commandSender.sendMessage("/stage setstage1 <stage name> <x> <y> <z>");
         }
-        return true;
+        return null;
     }
 
     @Override
@@ -50,7 +47,7 @@ public class SetStage1 extends StageCommandBase {
 
     @Override
     public String errorMessage() {
-        return null;
+        return "/stage setstage1 <stage name> <x> <y> <z>";
     }
 
     @Override

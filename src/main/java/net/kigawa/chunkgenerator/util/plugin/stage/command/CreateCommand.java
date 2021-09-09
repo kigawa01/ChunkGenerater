@@ -7,12 +7,12 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 public class CreateCommand extends StageCommandBase {
+    KigawaPlugin plugin;
+
     public CreateCommand(KigawaPlugin kigawaPlugin, StageManager manager) {
-        super(kigawaPlugin,manager);
+        super(kigawaPlugin, manager);
         plugin = kigawaPlugin;
     }
-
-    KigawaPlugin plugin;
 
     @Override
     public String getName() {
@@ -20,15 +20,12 @@ public class CreateCommand extends StageCommandBase {
     }
 
     @Override
-    public boolean onThisCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
+    public String onThisCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
         if (strings.length == 2) {
             //set stage
-            getManager().setStage(strings[1], commandSender);
-        } else {
-            //send error
-            commandSender.sendMessage("/stage create <name>");
+            return getManager().setStage(strings[1]);
         }
-        return true;
+        return null;
     }
 
     @Override
@@ -38,7 +35,7 @@ public class CreateCommand extends StageCommandBase {
 
     @Override
     public String errorMessage() {
-        return null;
+        return "/stage create <name>";
     }
 
     @Override
