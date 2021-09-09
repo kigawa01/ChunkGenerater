@@ -84,6 +84,15 @@ public class Generator {
         }
     }
 
+    public String generateRegion(String name) {
+        GeneratorData data = getGeneratorData(name);
+        if (data == null) {
+            return name + " is bot exit";
+        }
+        new RegionGenerator(data, this, plugin);
+        return "generate " + name;
+    }
+
     public String setGenerateRegion(String name, BlockRegion region) {
         GeneratorData data = getGeneratorData(name);
         Chunk chunk = region.getSLocation(plugin).getChunk();
