@@ -1,6 +1,7 @@
 package net.kigawa.chunkgenerator.generator.command;
 
 import net.kigawa.chunkgenerator.generator.Generator;
+import net.kigawa.chunkgenerator.generator.command.generate.GenerateRegion;
 import net.kigawa.chunkgenerator.generator.command.generate.Regenerate;
 import net.kigawa.chunkgenerator.generator.command.generate.RemoveRegion;
 import net.kigawa.chunkgenerator.generator.command.generate.SetRegion;
@@ -17,6 +18,7 @@ public class GenerateCommand extends FirstCommand {
         addSubcommands(new Regenerate(plugin, generator));
         addSubcommands(new SetRegion(plugin, generator));
         addSubcommands(new RemoveRegion(plugin, generator));
+        addSubcommands(new GenerateRegion(plugin, generator));
     }
 
     @Override
