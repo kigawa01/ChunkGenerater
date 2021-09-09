@@ -51,8 +51,10 @@ public class Generator {
         for (Entity entity : entities) {
             if (entity instanceof Player) {
                 Player player = PluginUtil.getPlayer(entity);
-                player.teleport(original.getSpawnLocation());
-                new InfoSender("再生成のためテレポートしました", player);
+                if (player.getLocation().getChunk().equals(originChunk)) {
+                    player.teleport(original.getSpawnLocation());
+                    new InfoSender("再生成のためテレポートしました", player);
+                }
             }
         }
 
@@ -61,7 +63,7 @@ public class Generator {
             for (int bY = 0; bY < 255; bY++) {
                 for (int bZ = 0; bZ < 15; bZ++) {
                     Block block = originChunk.getBlock(bX, bY, bZ);
-                    block.setBlockData(resourceChunk.getBlock(bX, bY, bZ).getBlockData());
+                    block.setBlockData(resourceChunk.getBlock(bX + 1, bY + 1, bZ + 1).getBlockData());
                 }
             }
         }
