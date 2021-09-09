@@ -31,7 +31,7 @@ public class Generator {
         dataList = plugin.getRecorder().loadAll(GeneratorData.class, "generator");
 
         //get world
-        if (resource != null) {
+        if (resource == null) {
             WorldCreator creator = new WorldCreator("ChunkGenerator");
             resource = creator.createWorld();
         }
@@ -85,6 +85,7 @@ public class Generator {
         Chunk chunk1 = region.getELocation(plugin).getChunk();
         if (data == null) {
             data = new GeneratorData();
+            data.setName(name);
             dataList.add(data);
         }
         data.setsX(chunk.getX());
