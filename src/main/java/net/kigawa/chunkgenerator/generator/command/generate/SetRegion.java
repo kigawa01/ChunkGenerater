@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class SetRegion extends GenerateCommandBase{
+public class SetRegion extends GenerateCommandBase {
     public SetRegion(KigawaPlugin kigawaPlugin, Generator generator) {
         super(kigawaPlugin, generator);
     }
@@ -22,8 +22,9 @@ public class SetRegion extends GenerateCommandBase{
 
     @Override
     public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (strings.length==2&&commandSender instanceof Player){
-            getGenerator().setGenerateRegion(strings[1],new BlockRegion(PluginUtil.getPlayer(commandSender)));
+        if (strings.length == 2 && commandSender instanceof Player) {
+            commandSender.sendMessage(getGenerator().setGenerateRegion(strings[1], new BlockRegion(PluginUtil.getPlayer(commandSender))));
+            return true;
         }
         return false;
     }

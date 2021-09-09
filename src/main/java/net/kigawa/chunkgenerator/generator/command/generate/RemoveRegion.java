@@ -20,7 +20,8 @@ public class RemoveRegion extends GenerateCommandBase {
     @Override
     public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length == 2) {
-            getGenerator().removeGenerateRegion(strings[1]);
+            commandSender.sendMessage( getGenerator().removeGenerateRegion(strings[1]));
+            return true;
         }
         return false;
     }
