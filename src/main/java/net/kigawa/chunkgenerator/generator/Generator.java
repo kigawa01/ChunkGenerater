@@ -43,8 +43,8 @@ public class Generator {
     public void generate(String world, int x, int z) {
         //get chunk
         World original = plugin.getServer().getWorld(world);
-        Chunk originChunk = original.getChunkAt(random.nextInt(10000000), random.nextInt(10000000));
-        Chunk resourceChunk = resource.getChunkAt(x, z);
+        Chunk originChunk = original.getChunkAt(x, z);
+        Chunk resourceChunk = resource.getChunkAt(random.nextInt(10000000), random.nextInt(10000000));
 
         //teleport player
         List<Entity> entities = original.getEntities();
