@@ -20,7 +20,7 @@ public class GenerateRegion extends GenerateCommandBase {
     @Override
     public String onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length == 2) {
-            getGenerator().generateRegion(strings[1]);
+            return getGenerator().generateRegion(strings[1]);
         }
         return null;
     }

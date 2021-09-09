@@ -87,7 +87,7 @@ public class Generator {
     public String generateRegion(String name) {
         GeneratorData data = getGeneratorData(name);
         if (data == null) {
-            return name + " is bot exit";
+            return name + " is not exit";
         }
         new RegionGenerator(data, this, plugin);
         return "generate " + name;
@@ -152,6 +152,7 @@ class RegionGenerator {
         this.plugin = plugin;
         x = data.getsX();
         z = data.getsZ();
+        generate();
     }
 
     public void generate() {
