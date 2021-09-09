@@ -59,10 +59,10 @@ public class Generator {
         }
 
         //set chunk block
-        for (int bX = 0; bX < 15; bX++) {
-            for (int bY = 0; bY < 255; bY++) {
-                for (int bZ = 0; bZ < 15; bZ++) {
-                    Block block = originChunk.getBlock(bX-1, bY-1, bZ-1);
+        for (int bX = 0; bX < 16; bX++) {
+            for (int bY = 0; bY < 256; bY++) {
+                for (int bZ = 0; bZ < 16; bZ++) {
+                    Block block = originChunk.getBlock(bX, bY, bZ);
                     block.setBlockData(resourceChunk.getBlock(bX , bY , bZ).getBlockData());
                 }
             }
