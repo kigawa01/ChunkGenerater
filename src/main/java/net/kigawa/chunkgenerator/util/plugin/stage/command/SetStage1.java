@@ -54,6 +54,11 @@ public class SetStage1 extends StageCommandBase {
     }
 
     @Override
+    public boolean isDefault() {
+        return false;
+    }
+
+    @Override
     public List<String> getTabStrings(CommandSender sender, org.bukkit.command.Command command, String label, String[] strings) {
         return null;
     }

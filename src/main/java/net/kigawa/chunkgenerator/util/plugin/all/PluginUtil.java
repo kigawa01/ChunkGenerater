@@ -28,11 +28,10 @@ public class PluginUtil {
         return world;
     }
 
-    public static Player getPlayer(CommandSender sender) {
-        if (sender instanceof Player) {
-            return (Player) sender;
+    public static Player getPlayer(Object object) {
+        if (object instanceof Player) {
+            return (Player) object;
         } else {
-            sender.sendMessage("you are not player");
             return null;
         }
     }

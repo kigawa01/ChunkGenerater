@@ -2,36 +2,32 @@ package net.kigawa.chunkgenerator.generator.command.generate;
 
 import net.kigawa.chunkgenerator.generator.Generator;
 import net.kigawa.chunkgenerator.util.plugin.all.KigawaPlugin;
-import net.kigawa.chunkgenerator.util.plugin.all.PluginUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class Regenerate extends GenerateCommandBase{
-    public Regenerate(KigawaPlugin kigawaPlugin, Generator generator) {
+public class RemoveRegion extends GenerateCommandBase {
+    public RemoveRegion(KigawaPlugin kigawaPlugin, Generator generator) {
         super(kigawaPlugin, generator);
     }
 
     @Override
     public String getName() {
-        return "regenerate";
+        return "removeregion";
     }
 
     @Override
     public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (strings.length==3&&commandSender instanceof Player){
-            getGenerator().generate(PluginUtil.getWorld(commandSender).getName(),Integer.valueOf(strings[1]),Integer.valueOf(strings[2]));
-            commandSender.sendMessage("regenerated!");
-            return true;
+        if (strings.length == 2) {
+            getGenerator().removeGenerateRegion(strings[1]);
         }
         return false;
     }
 
     @Override
     public String errorMessage() {
-        return "/generate regenerate <x> <z>";
+        return "/generator removeregion <name>";
     }
 
     @Override

@@ -1,6 +1,8 @@
 package net.kigawa.chunkgenerator.util.plugin.all.world;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockRegion extends Region {
     private int sX;
@@ -38,6 +40,14 @@ public class BlockRegion extends Region {
         if (eX >= 0) eX++;
         if (eY >= 0) eY++;
         if (eZ >= 0) eZ++;
+    }
+
+    public Location getSLocation(JavaPlugin plugin){
+        return new Location(plugin.getServer().getWorld(getWorld()),sX,sY,sZ);
+    }
+
+    public Location getELocation(JavaPlugin plugin){
+        return new Location(plugin.getServer().getWorld(getWorld()),eX,eY,eZ);
     }
 
     public int[] getCoordinates(){

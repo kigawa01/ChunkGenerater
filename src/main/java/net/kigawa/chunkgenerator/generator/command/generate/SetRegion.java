@@ -1,39 +1,36 @@
-package net.kigawa.chunkgenerator.util.plugin.gate.command.gate;
+package net.kigawa.chunkgenerator.generator.command.generate;
 
-import net.kigawa.chunkgenerator.util.plugin.gate.GateManager;
+import net.kigawa.chunkgenerator.generator.Generator;
 import net.kigawa.chunkgenerator.util.plugin.all.KigawaPlugin;
 import net.kigawa.chunkgenerator.util.plugin.all.PluginUtil;
+import net.kigawa.chunkgenerator.util.plugin.all.world.BlockRegion;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class GateTeleport extends GateCommandBase{
-    public GateTeleport(KigawaPlugin kigawaPlugin, GateManager gate) {
-        super(kigawaPlugin, gate);
+public class SetRegion extends GenerateCommandBase{
+    public SetRegion(KigawaPlugin kigawaPlugin, Generator generator) {
+        super(kigawaPlugin, generator);
     }
 
     @Override
     public String getName() {
-        return "tp";
+        return "setregion";
     }
 
     @Override
     public boolean onThisCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (strings.length==2){
-            Player player= PluginUtil.getPlayer(commandSender);
-            if (player!=null) {
-                commandSender.sendMessage( getManager().teleport(strings[1],player));
-                return true;
-            }
+        if (strings.length==2&&commandSender instanceof Player){
+            getGenerator().setGenerateRegion(strings[1],new BlockRegion(PluginUtil.getPlayer(commandSender)));
         }
         return false;
     }
 
     @Override
     public String errorMessage() {
-        return "/gate tp <gate name>";
+        return "/generator setregion <name>";
     }
 
     @Override

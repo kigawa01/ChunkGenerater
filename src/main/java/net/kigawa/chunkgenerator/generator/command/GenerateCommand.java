@@ -31,6 +31,11 @@ public class GenerateCommand extends FirstCommand {
     }
 
     @Override
+    public boolean isDefault() {
+        return false;
+    }
+
+    @Override
     public List<String> getTabStrings(CommandSender sender, Command command, String label, String[] strings) {
         return null;
     }
