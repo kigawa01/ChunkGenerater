@@ -80,8 +80,8 @@ public class Generator {
                     new RegionGenerator(data, this, plugin);
                 }
             }
+            Bukkit.getScheduler().runTaskLater(plugin, this::generateTimer, 20 * 60);
         }
-        Bukkit.getScheduler().runTaskLater(plugin, this::generateTimer, 20 * 60);
     }
 
     public String setGenerateRegion(String name, BlockRegion region) {
