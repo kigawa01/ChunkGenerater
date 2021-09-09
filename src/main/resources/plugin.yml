@@ -3,6 +3,8 @@ version: ${project.version}
 main: net.kigawa.chunkgenerator.ChunkGenerator
 api-version: 1.16
 authors: [ kigawa ]
+softdepend:
+  - WorldEdit
 commands:
   generator:
 
