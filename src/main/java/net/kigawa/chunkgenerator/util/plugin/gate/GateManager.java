@@ -2,7 +2,7 @@ package net.kigawa.chunkgenerator.util.plugin.gate;
 
 import net.kigawa.chunkgenerator.util.plugin.all.KigawaPlugin;
 import net.kigawa.chunkgenerator.util.plugin.all.message.sender.InfoSender;
-import net.kigawa.chunkgenerator.util.plugin.all.world.PlayerRegion;
+import net.kigawa.chunkgenerator.util.plugin.worldedit.world.PlayerRegion;
 import net.kigawa.chunkgenerator.util.plugin.worldedit.WorldEditUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;

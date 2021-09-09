@@ -2,7 +2,7 @@ package net.kigawa.chunkgenerator.util.plugin.gate;
 
 import net.kigawa.chunkgenerator.util.plugin.all.KigawaPlugin;
 import net.kigawa.chunkgenerator.util.all.Util;
-import net.kigawa.chunkgenerator.util.plugin.all.world.PlayerRegion;
+import net.kigawa.chunkgenerator.util.plugin.worldedit.world.PlayerRegion;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

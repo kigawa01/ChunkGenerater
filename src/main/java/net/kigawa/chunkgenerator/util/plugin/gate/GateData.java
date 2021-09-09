@@ -1,7 +1,7 @@
 package net.kigawa.chunkgenerator.util.plugin.gate;
 
 import net.kigawa.chunkgenerator.util.plugin.all.recorder.RecorderData;
-import net.kigawa.chunkgenerator.util.plugin.all.world.PlayerRegion;
+import net.kigawa.chunkgenerator.util.plugin.worldedit.world.PlayerRegion;
 
 public class GateData extends RecorderData {
     String world;

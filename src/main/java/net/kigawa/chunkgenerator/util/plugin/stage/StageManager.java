@@ -3,7 +3,7 @@ package net.kigawa.chunkgenerator.util.plugin.stage;
 import com.sk89q.worldedit.regions.Region;
 import net.kigawa.chunkgenerator.util.all.EqualsNamed;
 import net.kigawa.chunkgenerator.util.plugin.all.KigawaPlugin;
-import net.kigawa.chunkgenerator.util.plugin.all.world.PlayerRegion;
+import net.kigawa.chunkgenerator.util.plugin.worldedit.world.PlayerRegion;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;

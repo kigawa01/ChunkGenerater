@@ -3,7 +3,7 @@ package net.kigawa.chunkgenerator.generator.command.generate;
 import net.kigawa.chunkgenerator.generator.Generator;
 import net.kigawa.chunkgenerator.util.plugin.all.KigawaPlugin;
 import net.kigawa.chunkgenerator.util.plugin.all.PluginUtil;
-import net.kigawa.chunkgenerator.util.plugin.all.world.BlockRegion;
+import net.kigawa.chunkgenerator.util.plugin.worldedit.world.BlockRegion;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

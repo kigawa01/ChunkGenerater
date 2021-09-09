@@ -1,4 +1,4 @@
-package net.kigawa.chunkgenerator.util.plugin.all.world;
+package net.kigawa.chunkgenerator.util.plugin.worldedit.world;
 
 import net.kigawa.chunkgenerator.util.plugin.worldedit.WorldEditUtil;
 import org.bukkit.Location;

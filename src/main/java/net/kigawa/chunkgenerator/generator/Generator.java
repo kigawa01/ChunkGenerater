@@ -4,7 +4,7 @@ import net.kigawa.chunkgenerator.generator.command.GenerateCommand;
 import net.kigawa.chunkgenerator.util.plugin.all.KigawaPlugin;
 import net.kigawa.chunkgenerator.util.plugin.all.PluginUtil;
 import net.kigawa.chunkgenerator.util.plugin.all.message.sender.InfoSender;
-import net.kigawa.chunkgenerator.util.plugin.all.world.BlockRegion;
+import net.kigawa.chunkgenerator.util.plugin.worldedit.world.BlockRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
