@@ -75,7 +75,8 @@ public class Generator {
 
     public void generateTimer() {
         if (timer) {
-            if (Calendar.MINUTE == 0) {
+            Calendar calendar = Calendar.getInstance();
+            if (calendar.get(Calendar.MINUTE) == 0) {
                 for (GeneratorData data : dataList) {
                     new RegionGenerator(data, this, plugin);
                 }
