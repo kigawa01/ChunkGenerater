@@ -2,6 +2,8 @@ package net.kigawa.chunkgenerator.generator.command;
 
 import net.kigawa.chunkgenerator.generator.Generator;
 import net.kigawa.chunkgenerator.generator.command.generate.Regenerate;
+import net.kigawa.chunkgenerator.generator.command.generate.RemoveRegion;
+import net.kigawa.chunkgenerator.generator.command.generate.SetRegion;
 import net.kigawa.chunkgenerator.util.plugin.all.KigawaPlugin;
 import net.kigawa.chunkgenerator.util.plugin.all.command.FirstCommand;
 import org.bukkit.command.Command;
@@ -12,7 +14,9 @@ import java.util.List;
 public class GenerateCommand extends FirstCommand {
     public GenerateCommand(KigawaPlugin plugin, Generator generator) {
         super(plugin);
-        addSubcommands(new Regenerate(plugin,generator));
+        addSubcommands(new Regenerate(plugin, generator));
+        addSubcommands(new SetRegion(plugin, generator));
+        addSubcommands(new RemoveRegion(plugin, generator));
     }
 
     @Override
