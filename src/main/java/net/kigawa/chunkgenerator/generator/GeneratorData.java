@@ -7,6 +7,15 @@ public class GeneratorData extends RecorderData {
     int sZ;
     int mX;
     int mZ;
+    String world;
+
+    public String getWorld() {
+        return world;
+    }
+
+    public void setWorld(String world) {
+        this.world = world;
+    }
 
     public int getmZ() {
         return mZ;

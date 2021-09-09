@@ -12,6 +12,7 @@ import org.bukkit.WorldCreator;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Calendar;
 import java.util.List;
@@ -63,7 +64,7 @@ public class Generator {
             for (int bY = 0; bY < 256; bY++) {
                 for (int bZ = 0; bZ < 16; bZ++) {
                     Block block = originChunk.getBlock(bX, bY, bZ);
-                    block.setBlockData(resourceChunk.getBlock(bX , bY , bZ).getBlockData());
+                    block.setBlockData(resourceChunk.getBlock(bX, bY, bZ).getBlockData());
                 }
             }
         }
@@ -75,7 +76,9 @@ public class Generator {
     public void generateTimer() {
         if (timer) {
             if (Calendar.MINUTE == 0) {
-
+                for (GeneratorData data : dataList) {
+                    new RegionGenerator(data, this, plugin);
+                }
             }
         }
         Bukkit.getScheduler().runTaskLater(plugin, this::generateTimer, 20 * 60);
@@ -90,6 +93,7 @@ public class Generator {
             data.setName(name);
             dataList.add(data);
         }
+        data.setWorld(region.getWorld());
         data.setsX(chunk.getX());
         data.setsZ(chunk.getZ());
         data.setmX(chunk1.getX());
@@ -123,5 +127,37 @@ public class Generator {
             }
         }
         return null;
+    }
+}
+
+class RegionGenerator {
+    private Generator generator;
+    private GeneratorData data;
+    private int x;
+    private int z;
+    private JavaPlugin plugin;
+
+    public RegionGenerator(GeneratorData data, Generator generator, JavaPlugin plugin) {
+        this.data = data;
+        this.generator = generator;
+        this.plugin = plugin;
+        x = data.getsX();
+        z = data.getsZ();
+    }
+
+    public void generate() {
+        if (x <= data.getmX()) {
+            if (z <= data.getmZ()) {
+
+                generator.generate(data.world, x, z);
+
+                z++;
+                Bukkit.getScheduler().runTaskLater(plugin, this::generate, 1);
+                return;
+            }
+            z = data.getsZ();
+            x++;
+            Bukkit.getScheduler().runTaskLater(plugin, this::generate, 1);
+        }
     }
 }
