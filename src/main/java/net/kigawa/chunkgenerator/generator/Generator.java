@@ -78,7 +78,9 @@ public class Generator {
             Calendar calendar = Calendar.getInstance();
             if (calendar.get(Calendar.MINUTE) == 0) {
                 for (GeneratorData data : dataList) {
-                    new RegionGenerator(data, this, plugin);
+                    if (random.nextInt(101) <= plugin.getConfig().getInt("percent")) {
+                        new RegionGenerator(data, this, plugin);
+                    }
                 }
             }
             Bukkit.getScheduler().runTaskLater(plugin, this::generateTimer, 20 * 60);
