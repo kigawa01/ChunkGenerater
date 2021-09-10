@@ -1,19 +1,24 @@
 package net.kigawa.chunkgenerator.generator;
 
+import com.sk89q.jnbt.NBTInputStream;
+import com.sk89q.jnbt.NBTOutputStream;
+import com.sk89q.jnbt.NamedTag;
+import com.sk89q.jnbt.Tag;
 import net.kigawa.chunkgenerator.generator.command.GenerateCommand;
 import net.kigawa.chunkgenerator.util.plugin.all.KigawaPlugin;
-import net.kigawa.chunkgenerator.util.plugin.all.PluginUtil;
 import net.kigawa.chunkgenerator.util.plugin.all.message.sender.InfoSender;
 import net.kigawa.chunkgenerator.util.plugin.worldedit.world.BlockRegion;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -48,16 +53,20 @@ public class Generator {
         Chunk resourceChunk = resource.getChunkAt(random.nextInt(10000000), random.nextInt(10000000));
 
         //teleport player
-        List<Entity> entities = original.getEntities();
-        for (Entity entity : entities) {
-            if (entity instanceof Player) {
-                Player player = PluginUtil.getPlayer(entity);
-                if (player.getLocation().getChunk().equals(originChunk)) {
-                    player.teleport(original.getSpawnLocation());
-                    new InfoSender("再生成のためテレポートしました", player);
-                }
+        List<Player> players = original.getPlayers();
+        for (Player player : players) {
+            if (player.getWorld().equals(original) && player.getLocation().getChunk().equals(originChunk)) {
+                player.teleport(original.getSpawnLocation());
+                new InfoSender("再生成のためテレポートしました", player);
+
             }
         }
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                teleportOfflinePlayers(plugin.getServer().getOfflinePlayers(), original, originChunk);
+            }
+        }.runTaskAsynchronously(plugin);
 
         //set chunk block
         for (int bX = 0; bX < 16; bX++) {
@@ -71,6 +80,42 @@ public class Generator {
 
         //reset
         resourceChunk.unload();
+    }
+
+    public void teleportOfflinePlayers(OfflinePlayer[] offlinePlayers, World world, Chunk chunk) {
+        File worldDir = new File(Paths.get("").toAbsolutePath().toString(), world.getName());
+        File playerdata = new File(worldDir, "playerdata");
+        for (OfflinePlayer offlinePlayer : offlinePlayers) {
+            File file = new File(playerdata, offlinePlayer.getUniqueId() + ".dat");
+            try {
+                FileInputStream fileInputStream = new FileInputStream(file);
+                NBTInputStream nbtInputStream = new NBTInputStream(fileInputStream);
+                NamedTag namedTag;
+                while ((namedTag = nbtInputStream.readNamedTag()) != null) {
+                    if (namedTag.getName().equals("Pos")) {
+                        Tag tag = namedTag.getTag();
+                        double[] doubles = (double[]) tag.getValue();
+                        Location location = new Location(world, doubles[0], doubles[1], doubles[2]);
+                        if (location.getChunk().equals(chunk)) {
+                            NBTOutputStream nbtOutputStream = new NBTOutputStream(new FileOutputStream(file));
+                            Location spawn = world.getSpawnLocation();
+                            nbtOutputStream.writeNamedTag("Pos", new Tag() {
+                                @Override
+                                public Object getValue() {
+                                    return new double[]{
+                                            spawn.getX(), spawn.getY(), spawn.getZ()
+                                    };
+                                }
+                            });
+                            nbtOutputStream.close();
+                        }
+                    }
+                }
+                nbtInputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void generateTimer() {

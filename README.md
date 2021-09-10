@@ -31,7 +31,7 @@
 * [x] グループ
 * [x] 確率
 * [x] スケジュール
-* [ ] oflinePlayer
+* [x] oflinePlayer
 
 ## about
 
