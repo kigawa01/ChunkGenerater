@@ -1,24 +1,19 @@
 package net.kigawa.chunkgenerator.generator;
 
-import com.sk89q.jnbt.NBTInputStream;
-import com.sk89q.jnbt.NBTOutputStream;
-import com.sk89q.jnbt.NamedTag;
-import com.sk89q.jnbt.Tag;
 import net.kigawa.chunkgenerator.generator.command.GenerateCommand;
+import net.kigawa.chunkgenerator.generator.command.PlayerData;
 import net.kigawa.chunkgenerator.util.plugin.all.KigawaPlugin;
 import net.kigawa.chunkgenerator.util.plugin.all.message.sender.InfoSender;
 import net.kigawa.chunkgenerator.util.plugin.worldedit.world.BlockRegion;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -29,12 +24,14 @@ public class Generator {
     private KigawaPlugin plugin;
     private Random random = new Random();
     private List<GeneratorData> dataList;
+    private List<PlayerData> playerDataList;
 
     public Generator(KigawaPlugin plugin) {
         plugin.addCommand(new GenerateCommand(plugin, this));
         this.plugin = plugin;
         timer = plugin.getConfig().getBoolean("timer");
         dataList = plugin.getRecorder().loadAll(GeneratorData.class, "generator");
+        playerDataList = plugin.getRecorder().loadAll(PlayerData.class, "playerData");
 
         //get world
         if (resource == null) {
@@ -64,7 +61,7 @@ public class Generator {
         new BukkitRunnable() {
             @Override
             public void run() {
-                teleportOfflinePlayers(plugin.getServer().getOfflinePlayers(), original, originChunk);
+                teleportOfflinePlayers(plugin.getServer().getOfflinePlayers(), original.toString(), originChunk);
             }
         }.runTaskAsynchronously(plugin);
 
@@ -82,39 +79,34 @@ public class Generator {
         resourceChunk.unload();
     }
 
-    public void teleportOfflinePlayers(OfflinePlayer[] offlinePlayers, World world, Chunk chunk) {
-        File worldDir = new File(Paths.get("").toAbsolutePath().toString(), "world");
-        File playerdata = new File(worldDir, "playerdata");
-        for (OfflinePlayer offlinePlayer : offlinePlayers) {
-            File file = new File(playerdata, offlinePlayer.getUniqueId() + ".dat");
-            try {
-                FileInputStream fileInputStream = new FileInputStream(file);
-                NBTInputStream nbtInputStream = new NBTInputStream(fileInputStream);
-                NamedTag namedTag;
-                while ((namedTag = nbtInputStream.readNamedTag()) != null) {
-                    if (namedTag.getName().equals("Pos")) {
-                        Tag tag = namedTag.getTag();
-                        double[] doubles = (double[]) tag.getValue();
-                        Location location = new Location(world, doubles[0], doubles[1], doubles[2]);
-                        if (location.getChunk().equals(chunk)) {
-                            NBTOutputStream nbtOutputStream = new NBTOutputStream(new FileOutputStream(file));
-                            Location spawn = world.getSpawnLocation();
-                            nbtOutputStream.writeNamedTag("Pos", new Tag() {
-                                @Override
-                                public Object getValue() {
-                                    return new double[]{
-                                            spawn.getX(), spawn.getY(), spawn.getZ()
-                                    };
-                                }
-                            });
-                            nbtOutputStream.close();
-                        }
-                    }
-                }
-                nbtInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+    public void teleportOfflinePlayers(OfflinePlayer[] offlinePlayers, String world, Chunk chunk) {
+        for (OfflinePlayer player : offlinePlayers) {
+            PlayerData data = plugin.getRecorder().load(PlayerData.class, "playerData", player.getUniqueId().toString());
+            if (data != null && data.getWorld().equals(world) && data.getX() == chunk.getX() && data.getZ() == chunk.getZ()) {
+                data.setNeedTp(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        Chunk chunk = player.getLocation().getChunk();
+        PlayerData data = new PlayerData();
+        data.setName(player.getUniqueId().toString());
+        data.setX(chunk.getX());
+        data.setZ(chunk.getZ());
+        data.setWorld(player.getWorld().getName());
+        plugin.getRecorder().save(data, "playerData");
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        PlayerData data = plugin.getRecorder().load(PlayerData.class, "playerData", player.getUniqueId().toString());
+        if (data != null && data.getNeedTp()) {
+            player.teleport(player.getWorld().getSpawnLocation());
+            data.setNeedTp(false);
         }
     }
 
