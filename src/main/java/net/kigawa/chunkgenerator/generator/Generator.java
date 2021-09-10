@@ -83,7 +83,7 @@ public class Generator {
     }
 
     public void teleportOfflinePlayers(OfflinePlayer[] offlinePlayers, World world, Chunk chunk) {
-        File worldDir = new File(Paths.get("").toAbsolutePath().toString(), world.getName());
+        File worldDir = new File(Paths.get("").toAbsolutePath().toString(), "world");
         File playerdata = new File(worldDir, "playerdata");
         for (OfflinePlayer offlinePlayer : offlinePlayers) {
             File file = new File(playerdata, offlinePlayer.getUniqueId() + ".dat");
