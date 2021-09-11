@@ -12,6 +12,20 @@
 * kigawa
     * kigawa.8390@gmail.com
 
+
+## Command
+
+* /generator
+
+## specification
+
+* regenerateコマンドで指定したチャンクを再生成できます
+* 毎時間00分にそれぞれの範囲ごとにコンフィグの確率で再生成します
+* setregionコマンドでworldEditで指定した範囲が含まれるチャンクを指定します(複数可)
+* 再生成時にチャンク内にいたプレーヤーはオンライン・オフライン問わずにspawnポイントにテレポートします
+* チャンクの再生成はそれぞれの範囲ごとに一つのチャンクにつき1tickずらして生成します
+
+
 # Version
 
 ### 例: 9.1a
@@ -35,7 +49,4 @@
 * [x] release 1.0a
 
 ## about
-
-
-## Command
 
