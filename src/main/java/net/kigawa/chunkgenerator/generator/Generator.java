@@ -86,6 +86,7 @@ public class Generator implements Listener {
             PlayerData data = plugin.getRecorder().load(PlayerData.class, "playerData", player.getUniqueId().toString());
             if (data != null && data.getWorld().equals(world) && data.getX() == chunk.getX() && data.getZ() == chunk.getZ()) {
                 data.setNeedTp(true);
+                plugin.getRecorder().save(data,"playerData");
             }
         }
     }
