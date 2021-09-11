@@ -17,7 +17,7 @@
 
 * /generator
 
-## specification
+## Specification
 
 * regenerateコマンドで指定したチャンクを再生成できます
 * 毎時間00分にそれぞれの範囲ごとにコンフィグの確率で再生成します
