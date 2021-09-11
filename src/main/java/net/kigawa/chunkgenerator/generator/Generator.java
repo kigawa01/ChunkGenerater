@@ -63,7 +63,7 @@ public class Generator implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                teleportOfflinePlayers(plugin.getServer().getOfflinePlayers(), original.toString(), originChunk);
+                teleportOfflinePlayers(plugin.getServer().getOfflinePlayers(), original.getName(), originChunk);
             }
         }.runTaskAsynchronously(plugin);
 
@@ -86,7 +86,7 @@ public class Generator implements Listener {
             PlayerData data = plugin.getRecorder().load(PlayerData.class, "playerData", player.getUniqueId().toString());
             if (data != null && data.getWorld().equals(world) && data.getX() == chunk.getX() && data.getZ() == chunk.getZ()) {
                 data.setNeedTp(true);
-                plugin.getRecorder().save(data,"playerData");
+                plugin.getRecorder().save(data, "playerData");
             }
         }
     }
