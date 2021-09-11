@@ -32,6 +32,7 @@
 * [x] 確率
 * [x] スケジュール
 * [x] oflinePlayer
+* [x] release 1.0a
 
 ## about
 
