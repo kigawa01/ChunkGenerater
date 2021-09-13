@@ -15,7 +15,7 @@
 
 ## Command
 
-* /generator
+* /generator \<subcommand>
 
 ## Specification
 
