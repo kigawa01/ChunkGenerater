@@ -1,6 +1,8 @@
 # ChunkGenerator
 
+スパゲッティ
 
+最新だとなんかバグる
 
 ## Requirement
 
